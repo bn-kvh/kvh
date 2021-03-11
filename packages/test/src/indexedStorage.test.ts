@@ -1,16 +1,16 @@
 import { IndexedStorage } from '@kvh/storage';
 import test from 'ava';
+const utf8Encoder = new TextEncoder();
 
-// test('测试是否能正常读写数据', async (t) => {
-//   const storage = createStore();
-//   const height = 0;
-//   const saveVal = new StringUtf8(`value::${height}`);
-//   await storage.write(new StringUtf8('name'), saveVal, height);
-//   const getVal = await storage.read(new StringUtf8('name'), height);
-//   console.log(saveVal.getBytes());
-//   console.log(getVal);
-//   t.deepEqual(saveVal.getBytes(), getVal);
-// });
+test('测试是否能正常读写数据', async (t) => {
+  const storage = createStore();
+  const height = 0;
+  const saveKey = utf8Encoder.encode(`name`);
+  const saveVal = utf8Encoder.encode(`value::${height}`);
+  await storage.write(saveKey, height, saveVal);
+  const getVal = await storage.read(saveKey, height);
+  t.deepEqual(saveVal, getVal);
+});
 
 function createStore() {
   return new IndexedStorage();

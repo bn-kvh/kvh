@@ -8,16 +8,17 @@ try {
   rmdir(testDir);
 } catch {}
 
-// test('测试是否能正常读写数据', async (t) => {
-//   const storage = createStore();
-//   const height = 0;
-//   const saveVal = new StringUtf8(`value::${height}`);
-//   await storage.write(new StringUtf8('name'), saveVal, height);
-//   const getVal = await storage.read(new StringUtf8('name'), height);
-//   console.log(saveVal.getBytes());
-//   console.log(getVal);
-//   t.deepEqual(saveVal.getBytes(), getVal);
-// });
+const utf8Encoder = new TextEncoder();
+
+test('测试是否能正常读写数据', async (t) => {
+  const storage = createStore();
+  const height = 0;
+  const saveKey = utf8Encoder.encode(`name`);
+  const saveVal = utf8Encoder.encode(`value::${height}`);
+  await storage.write(saveKey, height, saveVal);
+  const getVal = await storage.read(saveKey, height);
+  t.deepEqual(saveVal, getVal && new Uint8Array(getVal));
+});
 
 function rmdir(dir: string) {
   const files = fs.readdirSync(dir);
