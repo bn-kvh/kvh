@@ -4,5 +4,9 @@
   "license": "ISC",
   "type": "commonjs",
   "main": "build/index.js",
-  "types": "build/index.d.ts"
+  "types": "build/index.d.ts",
+  "dependencies": {
+    "conditional-type-checks": "^1.0.5",
+    "web-streams-polyfill": "^3.0.2"
+  }
 }

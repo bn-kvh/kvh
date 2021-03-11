@@ -1,10 +1,9 @@
-import { BFChainKVH as KVH } from '@kvh/typings';
 import levelup from 'levelup';
 import leveldown from 'leveldown';
-import { BaseStorage } from '@kvh/demo';
+import { BaseStorage } from './BaseStorage';
 import { Buffer } from 'buffer';
 
-export class LevelStorage extends BaseStorage implements KVH.Engine.BaseStorage {
+export class LevelStorage extends BaseStorage {
   constructor(public dbPath: string) {
     super();
   }
@@ -12,26 +11,33 @@ export class LevelStorage extends BaseStorage implements KVH.Engine.BaseStorage 
   createStore(dbName: string) {
     return levelup(leveldown(`${this.dbPath}/${dbName}`));
   }
-  get(key: Uint8Array): Promise<Uint8Array | undefined> {
-    return new Promise((resolve) => {
-      this.kvhStore.get(Buffer.from(key), (error, value) => {
-        if (error) {
-          resolve(undefined);
-          return;
-        }
-        resolve(new Uint8Array(Buffer.from(value)));
-      });
+  read(key: Uint8Array, height: number) {
+    return new Promise<Uint8Array | undefined>((resolve) => {
+      this.kvhStore.get(
+        Buffer.concat([Buffer.from(new Uint32Array([height]).buffer), Buffer.from(key)]),
+        (error, value) => {
+          if (error) {
+            resolve(undefined);
+            return;
+          }
+          resolve(new Uint8Array(Buffer.from(value)));
+        },
+      );
     });
   }
-  set(key: Uint8Array, value: Uint8Array): Promise<void> {
-    return new Promise((resolve, reject) => {
-      this.kvhStore.put(Buffer.from(key), Buffer.from(value), (error) => {
-        if (error) {
-          reject(error);
-          return;
-        }
-        resolve();
-      });
+  write(key: Uint8Array, height: number, value: Uint8Array) {
+    return new Promise<void>((resolve, reject) => {
+      this.kvhStore.put(
+        Buffer.concat([Buffer.from(new Uint32Array([height]).buffer), Buffer.from(key)]),
+        Buffer.from(value),
+        (error) => {
+          if (error) {
+            reject(error);
+            return;
+          }
+          resolve();
+        },
+      );
     });
   }
   clear() {

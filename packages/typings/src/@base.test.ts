@@ -1,7 +1,7 @@
 // import { Worker, isMainThread, workerData, parentPort as _parentPort, MessageChannel } from 'worker_threads';
 // import { ReadableStream, ReadableStreamDefaultController } from 'web-streams-polyfill/ponyfill';
 import { assert, IsExact } from 'conditional-type-checks';
-class DatabaseValueUnit implements KVH2.DB.ValueUnit {
+class DatabaseValueUnit implements KVH.DB.ValueUnit {
   toBytes() {
     return new Uint8Array();
   }
@@ -14,7 +14,7 @@ class Equity extends DatabaseValueUnit {
 class Amount extends DatabaseValueUnit {
   z = 1;
 }
-const keyBuilderFactory = {} as KVH2.KB.Factory;
+const keyBuilderFactory = {} as KVH.DBB.Factory;
 
 async function test() {
   const keyBuilder = keyBuilderFactory // v1
@@ -33,7 +33,7 @@ async function test() {
     assert<
       IsExact<
         typeof key1,
-        KVH2.DB.KeyUnit<KVH2.KB.DatabaseKey<'{senderId:Address}.voteTo.{recipientId:Address}.equity'>>
+        KVH.DB.KeyUnit<KVH.DBB.DatabaseKey<'{senderId:Address}.voteTo.{recipientId:Address}.equity'>>
       >
     >(true);
 
@@ -48,7 +48,7 @@ async function test() {
       zzz: new Address(),
     });
     assert<
-      IsExact<typeof key2, KVH2.DB.KeyUnit<KVH2.KB.DatabaseKey<'{senderId:Address}.transferTo.{zzz:Address}.amount'>>>
+      IsExact<typeof key2, KVH.DB.KeyUnit<KVH.DBB.DatabaseKey<'{senderId:Address}.transferTo.{zzz:Address}.amount'>>>
     >(true);
 
     const equity2 = (await database.get(key2, 199))!;

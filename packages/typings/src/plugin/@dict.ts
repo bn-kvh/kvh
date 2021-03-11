@@ -1,10 +1,10 @@
-declare namespace KVH2 {
+declare namespace KVH {
   /**
    * ## 字典插件
    * 默认情况下，kvh的Key与Value都是直接的全量存储。
    * 但其实很多数据都可以通过建立字典，来大量节约存储空间。
    */
-  type DictPlugin<KV extends KVH2.DB.KV = any> = KVH2.Plugin.Required<
+  type DictPlugin<KV extends KVH.DB.KV = any> = KVH.Plugin.Required<
     'keyToBytes' | 'valueToBytes' | 'bytesToKey' | 'bytesToValue',
     KV
   >;

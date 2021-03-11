@@ -1,1 +1,1 @@
-declare const typeNever: (v: never) => never;
+declare const checkNever: (v: never) => never;

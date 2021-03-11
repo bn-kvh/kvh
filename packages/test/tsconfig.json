@@ -4,5 +4,10 @@
     "tsBuildInfoFile": "./build/tsconfig.tsbuildinfo",
     "outDir": "build",
     "rootDir": "src"
-  }
+  },
+  "references": [
+    {
+      "path": "../storage/tsconfig.json"
+    }
+  ]
 }

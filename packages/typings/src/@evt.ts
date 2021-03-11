@@ -1,10 +1,10 @@
-export declare namespace Evt {
-  export interface AttachOnlyEvt<T> {
-    attach(cb: (data: T) => void): void;
-    detach(cb: (data: T) => void): boolean;
+declare namespace Evt {
+  interface Evt<T> extends Attacher<T>, Poster<T> {}
+  interface Attacher<V> {
+    attach(cb: (data: V) => unknown): void;
+    detach(cb: (data: V) => unknown): boolean;
   }
-  export interface PostOnlyEvt<T> {
-    post(data: T): void;
+  interface Poster<V> {
+    post(data: V): void;
   }
-  export interface Evt<T> extends AttachOnlyEvt<T>, PostOnlyEvt<T> {}
 }

@@ -3,11 +3,6 @@
   "compilerOptions": {
     "tsBuildInfoFile": "./build/tsconfig.tsbuildinfo",
     "outDir": "build",
-    "rootDir": "src",
-  },
-  "references": [
-    {
-      "path": "../typings/tsconfig.json"
-    }
-  ]
+    "rootDir": "src"
+  }
 }

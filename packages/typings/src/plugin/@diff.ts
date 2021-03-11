@@ -1,4 +1,4 @@
-declare namespace KVH2 {
+declare namespace KVH {
   /**
    * ## 存储压缩插件
    *
@@ -7,5 +7,5 @@ declare namespace KVH2 {
    * 但这样也带来了大量存储空间的消耗。
    * 所以这里使用diff算法，使用CPU换存储。来对低频使用的数据进行有意识地压缩
    */
-  type DiffPlugin<KV extends KVH2.DB.KV = any> = KVH2.Plugin.Required<'transactionLoad' | 'transactionStore', KV>;
+  type DiffPlugin<KV extends KVH.DB.KV = any> = KVH.Plugin.Required<'transactionLoad' | 'transactionStore', KV>;
 }

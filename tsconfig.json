@@ -18,9 +18,6 @@
       "path": "./packages/kvh/tsconfig.json"
     },
     {
-      "path": "./packages/demo/tsconfig.json"
-    },
-    {
       "path": "./packages/test/tsconfig.json"
     }
   ]

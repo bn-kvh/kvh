@@ -1,0 +1,11 @@
+{
+    "name": "@kvh/evt",
+    "version": "0.0.0",
+    "license": "ISC",
+    "type": "commonjs",
+    "main": "build/index.js",
+    "types": "build/index.d.ts",
+    "dependencies": {
+    }
+  }
+  
