@@ -4,7 +4,7 @@ declare namespace KVH {
       key: Template,
       params: DBB.BuildKeyParams<Template, AliasType>,
     ): Util.PromiseMaybe<DB.KeyUnit<DBB.DatabaseKey<Template>>>;
-    toDatabase(): Util.PromiseMaybe<Database<DBB.DatabaseKeyValue<AliasType, TemplateValue>>>;
+    toDatabase(storage: Storage): Util.PromiseMaybe<Database<DBB.DatabaseKeyValue<AliasType, TemplateValue>>>;
   }
   namespace DBB {
     type TV<K extends string = string, V extends DB.ValueUnit = DB.ValueUnit> = { key: K; val: V };
@@ -20,10 +20,13 @@ declare namespace KVH {
     // type GetAliasByType<T, V> = T extends AT<infer Key, infer Type> ? (Type extends V ? Key : never) : never;
 
     interface Factory<AliasType extends DBB.AT = never, TemplateValue extends TV = never> {
-      $defineAliasType<Alias extends string, Type>(name?: Alias, type?: Type): Factory<AliasType | DBB.AT<Alias, Type>>;
+      $defineAliasType<Alias extends string, Type extends KVH.DB.KeyUnit<string>>(
+        name: Alias,
+        type: KVH.DB.KeyCtor<Type>,
+      ): Factory<AliasType | DBB.AT<Alias, Type>>;
       $defineTemplateValue<Template extends string, Value extends DB.ValueUnit>(
-        template?: Template,
-        value?: Value,
+        template: Template,
+        value: KVH.DB.ValueCtor<Value>,
       ): Factory<AliasType, TemplateValue | TV<Template, Value>>;
       toBuilder(): DatabaseBuilder<AliasType, TemplateValue>;
     }

@@ -24,6 +24,15 @@ declare namespace KVH {
       toBytes(): Uint8Array;
     }
 
+    interface KeyCtor<T extends KVH.DB.KeyUnit> {
+      new (): T;
+    }
+
+    interface ValueCtor<T extends KVH.DB.ValueUnit> {
+      new (): T;
+      fromBytes(bytes: Uint8Array): T;
+    }
+
     type GetResult<T, K> = { key: K; value: DB.GetValByKey<T, K>; height: number; prevHeight: number };
     interface Subject<V> extends Evt.Attacher<V> {
       readonly uri: string;
