@@ -6,6 +6,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "tsc -b -w",
+    "clear": "rimraf packages/*/build",
     "test": "node ./node_modules/ava/cli.js",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
@@ -17,7 +18,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "workspaces": ["packages/*"],
+  "workspaces": [
+    "packages/*"
+  ],
   "dependencies": {},
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.16.1",
